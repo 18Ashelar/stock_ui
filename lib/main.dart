@@ -455,7 +455,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
-                                              children: const [
+                                              children: [
                                                 Image(
                                                   height: 25.0,
                                                   width: 25.0,
@@ -474,9 +474,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 SizedBox(
                                                   width: 8.0,
                                                 ),
-                                                Icon(
-                                                  Icons.add,
-                                                  size: 20.0,
+                                                InkWell(
+                                                  onTap: () {
+                                                    _inviteFriendsDialog();
+                                                  },
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    size: 20.0,
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -493,9 +498,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         ),
                                         const Spacer(),
                                         GestureDetector(
-                                          onTap: () {
-                                            _inviteFriendsDialog();
-                                          },
+                                          onTap: () {},
                                           child: const Icon(
                                             Icons.keyboard_arrow_down_outlined,
                                             size: 20.0,
