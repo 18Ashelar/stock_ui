@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:stock_ui/sparkline.dart';
 import 'package:stock_ui/stock_page.dart';
@@ -60,10 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           IconButton(
               onPressed: () {
-
-                Navigator.push(context, MaterialPageRoute(builder:(context){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const StockPage();
-
                 }));
               },
               icon: const Icon(
@@ -96,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: [
-             const SizedBox(
+            const SizedBox(
               height: 5.0,
             ),
             Stack(
@@ -233,8 +232,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Container(
               height: 180,
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0, vertical: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15.0)),
@@ -248,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         decoration: BoxDecoration(
                             color: Colors.lightBlue,
                             borderRadius: BorderRadius.circular(20.0)),
-                        child:const  FittedBox(
+                        child: const FittedBox(
                           child: Text(
                             "Trending",
                             style: TextStyle(
@@ -267,7 +266,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20.0)),
-                        child:  const FittedBox(
+                        child: const FittedBox(
                           child: Text(
                             "Markerts",
                             style: TextStyle(
@@ -278,8 +277,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       const Spacer(),
-                     const FittedBox(
-                        child:  Text(
+                      const FittedBox(
+                        child: Text(
                           "See all",
                           style: TextStyle(
                             fontSize: 14.0,
@@ -343,7 +342,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Colors.lightBlue,
                               borderRadius: BorderRadius.circular(20.0)),
                           child: const FittedBox(
-                            child:  Text(
+                            child: Text(
                               "Watchlists",
                               style: TextStyle(
                                 fontSize: 16.0,
@@ -362,7 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20.0)),
                           child: const FittedBox(
-                            child:  Text(
+                            child: Text(
                               "Portfolio",
                               style: TextStyle(
                                 fontSize: 16.0,
@@ -372,8 +371,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         const Spacer(),
-                       const FittedBox(
-                          child:  Icon(
+                        const FittedBox(
+                          child: Icon(
                             Icons.more_horiz,
                             size: 30.0,
                           ),
@@ -398,8 +397,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                 const FittedBox(
-                                    child:  Text(
+                                  const FittedBox(
+                                    child: Text(
                                       "Tech With Friends",
                                       style: TextStyle(
                                         fontSize: 16.0,
@@ -493,9 +492,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ],
                                         ),
                                         const Spacer(),
-                                        const Icon(
-                                          Icons.keyboard_arrow_down_outlined,
-                                          size: 20.0,
+                                        GestureDetector(
+                                          onTap: () {
+                                            _inviteFriendsDialog();
+                                          },
+                                          child: const Icon(
+                                            Icons.keyboard_arrow_down_outlined,
+                                            size: 20.0,
+                                          ),
                                         )
                                       ],
                                     ),
@@ -522,7 +526,6 @@ class _MyHomePageState extends State<MyHomePage> {
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             items: const <BottomNavigationBarItem>[
-              
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: ' ',
@@ -566,5 +569,469 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<void> _inviteFriendsDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+          contentPadding: const EdgeInsets.all(0.0),
+          title: Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              padding: const EdgeInsets.all(0.0),
+              iconSize: 35.0,
+              icon: const Icon(
+                Icons.cancel_rounded,
+              ),
+              color: Colors.grey.shade400,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+              // color: Colors.red,
+              width: MediaQuery.of(context).size.width,
+              child: ListBody(
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Text(
+                      'Invite friends',
+                      style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      padding: const EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(7.0)),
+                      child: TextFormField(
+                        style: const TextStyle(fontSize: 16.0),
+                        decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 12.0),
+                            border: InputBorder.none,
+                            suffixIcon: Icon(Icons.search),
+                            hintStyle: TextStyle(fontSize: 16.0),
+                            hintText: "Search"),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Text(
+                          "ALREADY SHARED WITH",
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemBuilder: ((context, index) {
+                              return Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  InkWell(
+                                    child: Icon(
+                                      Icons.cancel_rounded,
+                                      color: Colors.grey.shade400,
+                                    ),
+                                  ),
+                                  const Image(
+                                    height: 70.0,
+                                    width: 70.0,
+                                    image: AssetImage("assets/avtar3.png"),
+                                  ),
+                                  const Text(
+                                    "Ali75",
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  PopupMenuButton(
+                                      // Callback that sets the selected popup menu item.
+                                      onSelected: (item) {},
+                                      padding: EdgeInsets.zero,
+                                      offset: const Offset(0, 30),
+                                      child: Row(
+                                        children: const [
+                                          Text(
+                                            "can edit",
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                color: Colors.black54),
+                                          ),
+                                          SizedBox(
+                                            width: 2.0,
+                                          ),
+                                          Icon(
+                                              Icons
+                                                  .keyboard_arrow_down_outlined,
+                                              color: Colors.black54)
+                                        ],
+                                      ),
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry>[
+                                            PopupMenuItem(
+                                              value: "",
+                                              child: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.check,
+                                                    color: Colors.blue,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.0,
+                                                  ),
+                                                  Text('Viewer'),
+                                                ],
+                                              ),
+                                            ),
+                                            PopupMenuItem(
+                                              value: "",
+                                              child: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.check,
+                                                    color: Colors.blue,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.0,
+                                                  ),
+                                                  Text('Commentator'),
+                                                ],
+                                              ),
+                                            ),
+                                            PopupMenuItem(
+                                              value: "",
+                                              child: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.check,
+                                                    color: Colors.blue,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.0,
+                                                  ),
+                                                  Text('Editor'),
+                                                ],
+                                              ),
+                                            ),
+                                            const PopupMenuItem(
+                                              value: "",
+                                              child: Divider(
+                                                thickness: 1.0,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                            PopupMenuItem(
+                                              value: "",
+                                              child: Text('Transfer ownership'),
+                                            ),
+                                            PopupMenuItem(
+                                              value: "",
+                                              child: Text('Remove access'),
+                                            ),
+                                          ]),
+                                  const SizedBox(
+                                    width: 10.0,
+                                  )
+                                ],
+                              );
+                            })),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 25.0),
+                          child: Text(
+                            "MY POPULAR CONNECTIONS",
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Center(
+                          child: Wrap(
+                            runSpacing: 10.0,
+                            spacing: 20.0,
+                            children: [
+                              FittedBox(
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 40.0,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        color: Colors.green,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(width: 50),
+                                          Expanded(
+                                            child: Text(
+                                              "Tina",
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontSize: 14.0),
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.circle,
+                                            color: Color(0xFFB8B8B8),
+                                            size: 20.0,
+                                          ),
+                                          SizedBox(
+                                            width: 20.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: -0.0,
+                                      left: -30.0,
+                                      child: Container(
+                                        height: 40,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(
+                                                  "assets/avtar3.png"),
+                                            )),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              FittedBox(
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 40.0,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        color: Colors.blue,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(width: 50),
+                                          Expanded(
+                                            child: Text(
+                                              "Ben",
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontSize: 14.0),
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.circle,
+                                            color: Color(0xFFB8B8B8),
+                                            size: 20.0,
+                                          ),
+                                          SizedBox(
+                                            width: 20.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: -0.0,
+                                      left: -30.0,
+                                      child: Container(
+                                        height: 40,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(
+                                                  "assets/avtar3.png"),
+                                            )),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              FittedBox(
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 40.0,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        color: Colors.pink,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(width: 50),
+                                          Expanded(
+                                            child: Text(
+                                              "Shila",
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontSize: 14.0),
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.circle,
+                                            color: Color(0xFFB8B8B8),
+                                            size: 20.0,
+                                          ),
+                                          SizedBox(
+                                            width: 20.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: -0.0,
+                                      left: -30.0,
+                                      child: Container(
+                                        height: 40,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(
+                                                  "assets/avtar3.png"),
+                                            )),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.12,
+                    decoration: BoxDecoration(
+                        color: Colors.lightBlue.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 20.0),
+                        Transform.rotate(
+                            angle: 180 * pi / 38,
+                            child: Icon(
+                              Icons.link,
+                              color: Colors.lightBlue,
+                              size: 30.0,
+                            )),
+                        SizedBox(width: 20.0),
+                        Text(
+                          "Copy link",
+                          style: TextStyle(
+                              color: Colors.lightBlue, fontSize: 14.0),
+                        ),
+                        Spacer(),
+                        ElevatedButton(
+                            onPressed: () {},
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 10.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  const Text("Send",
+                                      style: TextStyle(
+                                          fontSize: 16.0, color: Colors.white)),
+                                  const SizedBox(
+                                    width: 15.0,
+                                  ),
+                                  Transform.rotate(
+                                      angle: 180 * pi / 7,
+                                      child: Icon(
+                                        Icons.send,
+                                        color: Colors.white,
+                                        size: 20.0,
+                                      )),
+                                ],
+                              ),
+                            )),
+                        SizedBox(width: 30.0),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
